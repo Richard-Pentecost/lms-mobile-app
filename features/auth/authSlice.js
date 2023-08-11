@@ -37,7 +37,7 @@ const authSlice = createSlice({
   },
 });
 
-const { logout } = authSlice.actions;
+export const { logout } = authSlice.actions;
 
 export const logoutUser = () => {
   return async (dispatch) => {

@@ -40,7 +40,7 @@ describe('Login Form', () => {
     const mockFn = jest.fn(() => new Error());
 
     render(<LoginForm loginUser={mockFn} />);
-    console.log('********** TEST **********');
+
     await act(async () => {
       await fireEvent.changeText(
         screen.getByTestId('email'),

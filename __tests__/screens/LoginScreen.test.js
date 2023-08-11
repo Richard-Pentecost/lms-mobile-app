@@ -1,9 +1,10 @@
-import { render, screen } from '@testing-library/react-native';
+import { screen } from '@testing-library/react-native';
 import LoginScreen from '../../screens/LoginScreen';
+import { renderWithProviders } from '../../utils/utilsForTests';
 
 describe('Login Screen', () => {
   it('should render', () => {
-    render(<LoginScreen />);
+    renderWithProviders(<LoginScreen />);
 
     expect(screen.getByText('Login')).toBeTruthy();
   });
