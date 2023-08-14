@@ -1,11 +1,15 @@
-import { act, fireEvent, render, screen } from '@testing-library/react-native';
+import { act, fireEvent, screen } from '@testing-library/react-native';
 import LoginForm from '../../components/LoginForm';
+import { renderWithProviders } from '../../utils/utilsForTests';
 
 describe('Login Form', () => {
-  it('should render the heading, the input boxes and the button', () => {
-    const mockFn = jest.fn();
-    render(<LoginForm loginUser={mockFn} error={false} />);
+  const mockFn = jest.fn();
 
+  beforeEach(() => {
+    renderWithProviders(<LoginForm loginUser={mockFn} />);
+  });
+
+  it('should render the heading, the input boxes and the button', () => {
     expect(screen.getByText('Login')).toBeTruthy();
     expect(screen.getByTestId('email')).toBeTruthy();
     expect(screen.getByTestId('password')).toBeTruthy();
@@ -13,43 +17,41 @@ describe('Login Form', () => {
   });
 
   it('should render required error messages if the password and email fields do not have value', async () => {
-    const mockFn = jest.fn();
-    render(<LoginForm loginUser={mockFn} error={false} />);
-
     await act(() => {
       fireEvent.press(screen.getByTestId('submit'));
     });
+
     expect(screen.getByText('Email is required')).toBeTruthy();
     expect(screen.getByText('Password is required')).toBeTruthy();
     expect(mockFn).not.toHaveBeenCalled();
   });
 
   it('should render invalid email error if the email inputted is not a valid email address', async () => {
-    const mockFn = jest.fn();
-    render(<LoginForm loginUser={mockFn} error={false} />);
-
-    await act(() => {
-      fireEvent.changeText(screen.getByTestId('email'), 'invalidEmail');
+    await act(async () => {
+      await fireEvent.changeText(screen.getByTestId('email'), 'invalidEmail');
+      await fireEvent.changeText(screen.getByTestId('password'), 'password');
       fireEvent.press(screen.getByTestId('submit'));
     });
+
     expect(screen.getByText('Invalid email address')).toBeTruthy();
+    expect(screen.queryByText('Email is required')).toBeFalsy();
+    expect(screen.queryByText('Password is required')).toBeFalsy();
     expect(mockFn).not.toHaveBeenCalled();
   });
 
-  it('should render an error message if the email is incorrect', async () => {
-    const mockFn = jest.fn(() => new Error());
-
-    render(<LoginForm loginUser={mockFn} />);
-
+  it('should call the loginUser function with the email and password if there are no validation errors', async () => {
     await act(async () => {
       await fireEvent.changeText(
         screen.getByTestId('email'),
-        'notFound@email.com'
+        'valid@email.com'
       );
       await fireEvent.changeText(screen.getByTestId('password'), 'password');
-      await fireEvent.press(screen.getByTestId('submit'));
+      fireEvent.press(screen.getByTestId('submit'));
     });
-    // console.log(screen.wgetByText('something'));
-    expect(mockFn).toHaveBeenCalled();
+
+    expect(mockFn).toHaveBeenCalledWith({
+      email: 'valid@email.com',
+      password: 'password',
+    });
   });
 });

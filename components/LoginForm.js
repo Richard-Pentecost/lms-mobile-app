@@ -14,15 +14,6 @@ const LoginForm = ({ loginUser }) => {
     validationSchema: loginValidator,
   });
 
-  // useEffect(() => {
-  //   if (error) {
-  //     Alert.alert(
-  //       'Incorrect Login Details',
-  //       'The email or password you entered was incorrect. \n Please try again.'
-  //     );
-  //   }
-  // }, [error]);
-
   return (
     <Div m="lg">
       <Text mt="2xl" color="gray900" fontWeight="bold" fontSize="6xl">
