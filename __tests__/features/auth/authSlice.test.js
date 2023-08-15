@@ -43,9 +43,8 @@ describe('authSlice', () => {
       const state = { ...initialState, loading: true };
       const afterReducerOperation = authReducer(state, action);
       expect(afterReducerOperation).toEqual({
+        ...initialState,
         token: 'token',
-        loading: false,
-        errorMessage: '',
         loggedInUser: 'User',
       });
     });

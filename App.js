@@ -7,7 +7,7 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { Provider, useDispatch, useSelector } from 'react-redux';
 import store from './app/store';
 import IconButton from './components/ui/IconButton';
-import { Colours } from './contants/colours';
+import { Colours } from './constants/colours';
 import { logoutUser } from './features/auth/authSlice';
 import HomeScreen from './screens/HomeScreen';
 import LoginScreen from './screens/LoginScreen';

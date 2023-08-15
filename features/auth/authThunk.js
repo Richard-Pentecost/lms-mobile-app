@@ -12,7 +12,7 @@ export const loginUser = createAsyncThunk(
       const token = await getTokenPayload();
       return { token, user: response.data.user };
     } catch (err) {
-      // console.error('ERROR: ', err);
+      // console.error('ERROR:', err);
       return rejectWithValue('Incorrect Login Details');
     }
   }
