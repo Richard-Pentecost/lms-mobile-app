@@ -1,8 +1,8 @@
 import { act, fireEvent, screen } from '@testing-library/react-native';
 import LoginForm from '../../components/LoginForm';
-import { renderWithProviders } from '../../utils/utilsForTests';
+import { renderWithProviders } from '../../test-utils/test-redux-store';
 
-describe('Login Form', () => {
+describe('LoginForm', () => {
   const mockFn = jest.fn();
 
   beforeEach(() => {

@@ -9,7 +9,15 @@ const FarmCard = ({
   onPress,
 }) => (
   <Div shadow="sm" w="48%" mb={10} rounded="lg" bg="white" r>
-    <Button block h={120} p="none" bg="white" rounded="lg" onPress={onPress}>
+    <Button
+      block
+      h={120}
+      p="none"
+      bg="white"
+      rounded="lg"
+      onPress={onPress}
+      testID="button"
+    >
       <Div flex={1} p={10}>
         <Div pb={5} borderBottomColor="gray500" borderBottomWidth={1}>
           <Text fontWeight="bold" fontSize="xl">

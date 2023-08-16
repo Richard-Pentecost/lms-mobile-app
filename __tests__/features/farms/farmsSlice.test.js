@@ -1,5 +1,6 @@
 import farmsReducer from '../../../features/farms/farmsSlice';
 import { fetchActiveFarms } from '../../../features/farms/farmsThunk';
+import { farm } from '../../../test-utils/data-factory';
 
 describe('farmsSlice', () => {
   const initialState = {
@@ -26,15 +27,16 @@ describe('farmsSlice', () => {
     });
 
     it('should update state correctly when fetching active farms is fulfilled', async () => {
+      const returnedFarms = [farm(), farm()];
       const action = {
         type: fetchActiveFarms.fulfilled.type,
-        payload: [{ name: 'farm 1' }, { name: 'farm 2' }],
+        payload: returnedFarms,
       };
       const state = { ...initialState, loading: true };
       const afterReducerOperation = farmsReducer(state, action);
       expect(afterReducerOperation).toEqual({
         ...initialState,
-        farms: [{ name: 'farm 1' }, { name: 'farm 2' }],
+        farms: returnedFarms,
       });
     });
 

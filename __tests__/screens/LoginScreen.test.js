@@ -4,7 +4,7 @@ import { setupServer } from 'msw/node';
 import { Alert } from 'react-native';
 import { API_URL } from 'react-native-dotenv';
 import LoginScreen from '../../screens/LoginScreen';
-import { renderWithProviders } from '../../utils/utilsForTests';
+import { renderWithProviders } from '../../test-utils/test-redux-store';
 
 export const handlers = [
   rest.post(`${API_URL}/login`, (_req, res, ctx) => {

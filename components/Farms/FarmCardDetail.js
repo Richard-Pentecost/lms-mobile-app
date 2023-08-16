@@ -10,6 +10,7 @@ const FarmCardDetail = ({ children, icon, iconLibrary }) => {
           size={16}
           fontFamily={iconLibrary}
           color={Colours.grey100}
+          testID="icon"
         />
       </Div>
       <Div>
