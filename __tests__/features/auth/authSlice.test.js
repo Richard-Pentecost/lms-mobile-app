@@ -19,11 +19,10 @@ describe('authSlice', () => {
 
   describe('authenticate', () => {
     it('should add the token to state', () => {
-      const action = {
-        type: authenticate,
-        payload: { token: 'token', user: 'User' },
-      };
-      const afterReducerOperation = authReducer(initialState, action);
+      const afterReducerOperation = authReducer(
+        initialState,
+        authenticate({ token: 'token' })
+      );
       expect(afterReducerOperation).toEqual({
         ...initialState,
         token: 'token',
@@ -33,9 +32,8 @@ describe('authSlice', () => {
 
   describe('logout', () => {
     it('should remove the token and logged in user from state', () => {
-      const action = { type: logout };
       const state = { ...initialState, token: 'token', loggedInUser: 'User' };
-      const afterReducerOperation = authReducer(state, action);
+      const afterReducerOperation = authReducer(state, logout());
 
       expect(afterReducerOperation).toEqual(initialState);
     });
