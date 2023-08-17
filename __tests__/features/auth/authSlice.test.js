@@ -1,4 +1,7 @@
-import authReducer, { logout } from '../../../features/auth/authSlice';
+import authReducer, {
+  authenticate,
+  logout,
+} from '../../../features/auth/authSlice';
 import { loginUser } from '../../../features/auth/authThunk';
 
 describe('authSlice', () => {
@@ -14,10 +17,25 @@ describe('authSlice', () => {
     expect(authSliceInit).toEqual(initialState);
   });
 
+  describe('authenticate', () => {
+    it('should add the token to state', () => {
+      const action = {
+        type: authenticate,
+        payload: { token: 'token', user: 'User' },
+      };
+      const afterReducerOperation = authReducer(initialState, action);
+      expect(afterReducerOperation).toEqual({
+        ...initialState,
+        token: 'token',
+      });
+    });
+  });
+
   describe('logout', () => {
     it('should remove the token and logged in user from state', () => {
+      const action = { type: logout };
       const state = { ...initialState, token: 'token', loggedInUser: 'User' };
-      const afterReducerOperation = authReducer(state, logout(state));
+      const afterReducerOperation = authReducer(state, action);
 
       expect(afterReducerOperation).toEqual(initialState);
     });

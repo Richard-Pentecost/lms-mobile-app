@@ -65,3 +65,7 @@ exports.product = (options = {}) => {
     specificGravity: options.specificGravity || faker.number.number(),
   };
 };
+
+exports.region = (options = {}) => {
+  return { regionName: options.regionName || faker.location.county() };
+};

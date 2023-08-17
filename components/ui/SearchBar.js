@@ -1,6 +1,12 @@
 import { useState } from 'react';
-import { Keyboard, LayoutAnimation, Pressable, StyleSheet } from 'react-native';
-import { Button, Div, Icon, Input } from 'react-native-magnus';
+import {
+  Button,
+  Keyboard,
+  LayoutAnimation,
+  Pressable,
+  StyleSheet,
+} from 'react-native';
+import { Div, Icon, Input } from 'react-native-magnus';
 
 const SearchBar = ({ searchValue, setSearchValue }) => {
   const [clicked, setClicked] = useState(false);
@@ -28,6 +34,7 @@ const SearchBar = ({ searchValue, setSearchValue }) => {
   return (
     <Div mt={20} flexDirection="row">
       <Input
+        py={10}
         fontSize="xl"
         bg="white"
         flex={1}
@@ -39,6 +46,7 @@ const SearchBar = ({ searchValue, setSearchValue }) => {
         value={searchValue}
         prefix={
           <Icon
+            py={1}
             name="search"
             color="gray500"
             fontFamily="Feather"
@@ -64,8 +72,8 @@ const SearchBar = ({ searchValue, setSearchValue }) => {
         onFocus={selectSearchBar}
       />
       {clicked && (
-        <Div>
-          <Button title="Cancel" onPress={cancelSearch} />
+        <Div justifyContent="center">
+          <Button title="Cancel" onPress={cancelSearch}></Button>
         </Div>
       )}
     </Div>
