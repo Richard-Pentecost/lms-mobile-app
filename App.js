@@ -1,16 +1,21 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import * as SplashScreen from 'expo-splash-screen';
 import { StatusBar } from 'expo-status-bar';
+import { useCallback, useEffect, useState } from 'react';
 import { View } from 'react-native';
+import Spinner from 'react-native-loading-spinner-overlay';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { Provider, useDispatch, useSelector } from 'react-redux';
 import store from './app/store';
 import IconButton from './components/ui/IconButton';
 import { Colours } from './constants/colours';
-import { logoutUser } from './features/auth/authSlice';
+import { authenticateUser, logoutUser } from './features/auth/authSlice';
 import HomeScreen from './screens/HomeScreen';
 import LoginScreen from './screens/LoginScreen';
+
+SplashScreen.preventAutoHideAsync();
 
 const Stack = createNativeStackNavigator();
 const BottomTab = createBottomTabNavigator();
@@ -62,8 +67,46 @@ const Navigation = () => {
 };
 
 const Root = () => {
+  const [isTryingLogin, setIsTryingLogin] = useState(true);
+  const [loading, setLoading] = useState(false);
+  const dispatch = useDispatch();
+
+  const { loading: farmsLoading } = useSelector((state) => state.farmsState);
+  const { loading: authLoading } = useSelector((state) => state.authState);
+  const { loading: regionsLoading } = useSelector(
+    (state) => state.regionsState
+  );
+
+  useEffect(() => {
+    if (farmsLoading || authLoading || regionsLoading) {
+      setLoading(true);
+    } else {
+      setLoading(false);
+    }
+  }, [farmsLoading, authLoading, regionsLoadings]);
+
+  useEffect(() => {
+    const fetchToken = async () => {
+      dispatch(authenticateUser());
+      setIsTryingLogin(false);
+    };
+
+    fetchToken();
+  }, []);
+
+  const onLayoutRootView = useCallback(async () => {
+    if (!isTryingLogin) {
+      await SplashScreen.hideAsync();
+    }
+  }, [isTryingLogin]);
+
+  if (isTryingLogin) {
+    return null;
+  }
+
   return (
-    <View style={{ flex: 1 }}>
+    <View style={{ flex: 1 }} onLayout={onLayoutRootView}>
+      <Spinner visible={loading} />
       <Navigation />
     </View>
   );
