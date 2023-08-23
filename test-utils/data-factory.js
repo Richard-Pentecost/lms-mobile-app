@@ -66,6 +66,6 @@ exports.product = (options = {}) => {
   };
 };
 
-exports.region = (options = {}) => {
-  return { regionName: options.regionName || faker.location.county() };
+exports.region = (regionName) => {
+  return { regionName: regionName || faker.location.county() };
 };

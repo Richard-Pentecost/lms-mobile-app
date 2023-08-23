@@ -15,7 +15,7 @@ import { authenticateUser, logoutUser } from './features/auth/authSlice';
 import HomeScreen from './screens/HomeScreen';
 import LoginScreen from './screens/LoginScreen';
 
-SplashScreen.preventAutoHideAsync();
+// SplashScreen.preventAutoHideAsync();
 
 const Stack = createNativeStackNavigator();
 const BottomTab = createBottomTabNavigator();
@@ -83,7 +83,7 @@ const Root = () => {
     } else {
       setLoading(false);
     }
-  }, [farmsLoading, authLoading, regionsLoadings]);
+  }, [farmsLoading, authLoading, regionsLoading]);
 
   useEffect(() => {
     const fetchToken = async () => {
@@ -96,8 +96,10 @@ const Root = () => {
 
   const onLayoutRootView = useCallback(async () => {
     if (!isTryingLogin) {
+      console.log('before splash screen hide async');
       await SplashScreen.hideAsync();
     }
+    console.log('after splash screen hide async');
   }, [isTryingLogin]);
 
   if (isTryingLogin) {

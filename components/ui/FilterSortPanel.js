@@ -7,7 +7,7 @@ const FilterSortPanel = ({ regions, region, setRegion }) => {
   const dropdownRef = useRef();
 
   return (
-    <Div row py={10} justifyContent="space-between" alignItems="center">
+    <Div row pt={10} justifyContent="space-between" alignItems="center">
       <Pressable
         style={(({ pressed }) => pressed && styles.pressed, styles.filter)}
         onPress={() => !region && dropdownRef.current?.open()}
@@ -18,6 +18,7 @@ const FilterSortPanel = ({ regions, region, setRegion }) => {
           </Text>
           {!region && (
             <Icon
+              testID="caret-down-icon"
               name="caret-down"
               fontFamily="FontAwesome"
               size={16}
@@ -34,6 +35,7 @@ const FilterSortPanel = ({ regions, region, setRegion }) => {
       )}
       <Dropdown
         ref={dropdownRef}
+        testID="dropdown"
         title={
           <Text
             mx="xl"
@@ -52,6 +54,7 @@ const FilterSortPanel = ({ regions, region, setRegion }) => {
       >
         {regions.map((region) => (
           <Dropdown.Option
+            testID="dropdown-option"
             key={region.regionName}
             py="lg"
             px="xl"

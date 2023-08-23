@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Div } from 'react-native-magnus';
 import { useDispatch, useSelector } from 'react-redux';
 import FarmList from '../components/Farms/FarmList';
+import FilterSortPanel from '../components/ui/FilterSortPanel';
 import SearchBar from '../components/ui/SearchBar';
 import { fetchActiveFarms } from '../features/farms/farmsThunk';
 import { fetchRegions } from '../features/regions/regionsThunk';
@@ -12,7 +13,7 @@ const HomeScreen = () => {
   const { regions } = useSelector((state) => state.regionsState);
   const [filteredFarms, setFilteredFarms] = useState(farms);
   const [search, setSearch] = useState('');
-  const [region, setRegion] = useState(null);
+  const [region, setRegion] = useState('');
 
   useEffect(() => {
     if (!farms) {
@@ -46,7 +47,13 @@ const HomeScreen = () => {
   return (
     <Div px={25}>
       <SearchBar searchValue={search} setSearchValue={setSearch} />
-      {/* <FilterSortPanel /> */}
+      {regions && (
+        <FilterSortPanel
+          regions={regions}
+          region={region}
+          setRegion={setRegion}
+        />
+      )}
       {farms && <FarmList farms={filteredFarms} />}
     </Div>
   );

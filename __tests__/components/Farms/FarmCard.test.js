@@ -1,4 +1,4 @@
-import { act, fireEvent, render, screen } from '@testing-library/react-native';
+import { fireEvent, render, screen } from '@testing-library/react-native';
 import FarmCard from '../../../components/Farms/FarmCard';
 import { farm } from '../../../test-utils/data-factory';
 
@@ -25,10 +25,9 @@ describe('FarmCard', () => {
     expect(screen.getByText(farmInfo.contactNumber)).toBeTruthy();
   });
 
-  it('should call the onPress function when the card is pressed', async () => {
-    await act(async () => {
-      await fireEvent.press(screen.getByTestId('button'));
-    });
+  it('should call the onPress function when the card is pressed', () => {
+    fireEvent.press(screen.getByTestId('button'));
+
     expect(mockFn).toHaveBeenCalled();
   });
 });

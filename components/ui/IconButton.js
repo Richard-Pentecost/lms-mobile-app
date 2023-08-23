@@ -6,8 +6,9 @@ const IconButton = ({ icon, color, size, onPress }) => {
     <Pressable
       style={({ pressed }) => [styles.button, pressed && styles.pressed]}
       onPress={onPress}
+      testID="icon-button"
     >
-      <FontAwesome name={icon} color={color} size={size} />
+      <FontAwesome name={icon} color={color} size={size} testID="icon" />
     </Pressable>
   );
 };

@@ -34,6 +34,7 @@ const SearchBar = ({ searchValue, setSearchValue }) => {
   return (
     <Div mt={20} flexDirection="row">
       <Input
+        testID="search-bar"
         py={10}
         fontSize="xl"
         bg="white"
@@ -46,6 +47,7 @@ const SearchBar = ({ searchValue, setSearchValue }) => {
         value={searchValue}
         prefix={
           <Icon
+            testID="search-icon"
             py={1}
             name="search"
             color="gray500"
@@ -59,6 +61,7 @@ const SearchBar = ({ searchValue, setSearchValue }) => {
             <Pressable
               onPress={clearSearch}
               style={({ pressed }) => pressed && styles.pressed}
+              testID="clear-button"
             >
               <Icon
                 name="close-circle"
