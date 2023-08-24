@@ -1,3 +1,4 @@
+import { FontAwesome } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -9,10 +10,11 @@ import Spinner from 'react-native-loading-spinner-overlay';
 import { ReduxNetworkProvider } from 'react-native-offline';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { Provider, useDispatch, useSelector } from 'react-redux';
-import { store } from './app/store';
+import store from './app/store';
 import IconButton from './components/ui/IconButton';
 import { Colours } from './constants/colours';
 import { authenticateUser, logoutUser } from './features/auth/authSlice';
+import FarmScreen from './screens/FarmScreen';
 import HomeScreen from './screens/HomeScreen';
 import LoginScreen from './screens/LoginScreen';
 
@@ -55,9 +57,39 @@ const AuthenticatedStack = () => {
       }}
     >
       <Stack.Screen name="Home" component={HomeScreen} />
+      <Stack.Screen name="Farm" component={FarmTabNavigation} />
     </Stack.Navigator>
   );
 };
+
+const FarmTabNavigation = ({ route, navigation }) => {
+  const { farm } = route.params;
+
+  useEffect(() => {
+    navigation.setOptions({ title: farm.farmName });
+  }, [farm]);
+
+  return (
+    <BottomTab.Navigator
+      screenOptions={{
+        headerShown: false,
+        tabBarActiveTintColor: Colours.green700,
+      }}
+    >
+      <BottomTab.Screen
+        name="Information"
+        component={FarmScreen}
+        initialParams={{ farm }}
+        options={{
+          tabBarIcon: ({ size }) => (
+            <FontAwesome name="info" color={Colours.green700} size={size} />
+          ),
+        }}
+      />
+    </BottomTab.Navigator>
+  );
+};
+
 const Navigation = () => {
   const { token } = useSelector((state) => state.authState);
   return (

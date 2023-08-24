@@ -1,6 +1,17 @@
 import { faker } from '@faker-js/faker';
 
-exports.farm = (options = {}) => {
+export const product = (options = {}) => {
+  return {
+    productName: options.productName || faker.lorem.word(),
+    specificGravity: options.specificGravity || faker.number.float(),
+  };
+};
+
+export const region = (regionName) => {
+  return { regionName: regionName || faker.location.county() };
+};
+
+export const farm = (options = {}) => {
   const farm = {
     farmName: options.farmName || faker.lorem.word(),
     postcode: options.postcode || 'AB1 2CD',
@@ -9,12 +20,14 @@ exports.farm = (options = {}) => {
     isActive: true,
     regionFK: options.region || null,
     accessCodes: options.accessCodes || null,
-    comment: options.comments,
+    region: options.region ? region() : null,
+    products: [product(), product(), product()],
+    comments: options.comments || null,
   };
   return farm;
 };
 
-exports.data = (options = {}) => {
+export const data = (options = {}) => {
   const floatBeforeDelivery = faker.number.float();
   const floatAfterDelivery = floatBeforeDelivery + 100;
   const data = {
@@ -35,7 +48,7 @@ exports.data = (options = {}) => {
   return data;
 };
 
-exports.fullData = (options = {}) => {
+export const fullData = (options = {}) => {
   const data = {
     farmFk: options.farmFk,
     date: options.date || faker.date.recent(),
@@ -57,15 +70,4 @@ exports.fullData = (options = {}) => {
   };
 
   return data;
-};
-
-exports.product = (options = {}) => {
-  return {
-    productName: options.productName || faker.lorem.word(),
-    specificGravity: options.specificGravity || faker.number.number(),
-  };
-};
-
-exports.region = (regionName) => {
-  return { regionName: regionName || faker.location.county() };
 };

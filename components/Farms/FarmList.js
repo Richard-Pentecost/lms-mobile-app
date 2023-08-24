@@ -1,11 +1,14 @@
+import { useNavigation } from '@react-navigation/native';
 import { FlatList } from 'react-native';
 import { Div } from 'react-native-magnus';
 import FarmCard from './FarmCard';
 
 const FarmList = ({ farms }) => {
+  const navigation = useNavigation();
+
   const renderFarmCard = ({ item }) => {
     onPressHandler = () => {
-      console.log('navigation to be implemented');
+      navigation.navigate('Farm', { farm: item });
     };
 
     const { farmName, postcode, contactName, contactNumber } = item;
