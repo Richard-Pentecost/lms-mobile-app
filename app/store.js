@@ -1,4 +1,5 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
+import { reducer as network } from 'react-native-offline';
 import authReducer from '../features/auth/authSlice';
 import farmsReducer from '../features/farms/farmsSlice';
 import regionsReducer from '../features/regions/regionsSlice';
@@ -7,6 +8,7 @@ const combinedReducer = combineReducers({
   authState: authReducer,
   farmsState: farmsReducer,
   regionsState: regionsReducer,
+  network,
 });
 
 const rootReducer = (state, action) => {

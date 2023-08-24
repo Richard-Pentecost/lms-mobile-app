@@ -6,9 +6,10 @@ import { StatusBar } from 'expo-status-bar';
 import { useCallback, useEffect, useState } from 'react';
 import { View } from 'react-native';
 import Spinner from 'react-native-loading-spinner-overlay';
+import { ReduxNetworkProvider } from 'react-native-offline';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { Provider, useDispatch, useSelector } from 'react-redux';
-import store from './app/store';
+import { store } from './app/store';
 import IconButton from './components/ui/IconButton';
 import { Colours } from './constants/colours';
 import { authenticateUser, logoutUser } from './features/auth/authSlice';
@@ -119,7 +120,9 @@ export default function App() {
     <SafeAreaProvider>
       <StatusBar style="auto" />
       <Provider store={store}>
-        <Root />
+        <ReduxNetworkProvider>
+          <Root />
+        </ReduxNetworkProvider>
       </Provider>
     </SafeAreaProvider>
   );
