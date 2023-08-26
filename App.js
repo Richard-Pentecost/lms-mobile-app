@@ -14,6 +14,8 @@ import store from './app/store';
 import IconButton from './components/ui/IconButton';
 import { Colours } from './constants/colours';
 import { authenticateUser, logoutUser } from './features/auth/authSlice';
+import AddDataScreen from './screens/AddDataScreen';
+import DataScreen from './screens/DataScreen';
 import FarmScreen from './screens/FarmScreen';
 import HomeScreen from './screens/HomeScreen';
 import LoginScreen from './screens/LoginScreen';
@@ -49,7 +51,7 @@ const AuthenticatedStack = () => {
         headerRight: () => (
           <IconButton
             icon={'sign-out'}
-            color={Colours.green100}
+            color={Colours.grey900}
             size={24}
             onPress={logoutHandler}
           />
@@ -74,6 +76,8 @@ const FarmTabNavigation = ({ route, navigation }) => {
       screenOptions={{
         headerShown: false,
         tabBarActiveTintColor: Colours.green700,
+        tabBarInactiveTintColor: Colours.grey900,
+        tabBarLabelStyle: { fontSize: 12, fontWeight: 'bold' },
       }}
     >
       <BottomTab.Screen
@@ -81,8 +85,40 @@ const FarmTabNavigation = ({ route, navigation }) => {
         component={FarmScreen}
         initialParams={{ farm }}
         options={{
-          tabBarIcon: ({ size }) => (
-            <FontAwesome name="info" color={Colours.green700} size={size} />
+          tabBarIcon: ({ focused, size }) => (
+            <FontAwesome
+              name="info"
+              color={focused ? Colours.green700 : Colours.grey900}
+              size={size}
+            />
+          ),
+        }}
+      />
+      <BottomTab.Screen
+        name="Data"
+        component={DataScreen}
+        initialParams={{ farm }}
+        options={{
+          tabBarIcon: ({ focused, size }) => (
+            <FontAwesome
+              name="table"
+              color={focused ? Colours.green700 : Colours.grey900}
+              size={size}
+            />
+          ),
+        }}
+      />
+      <BottomTab.Screen
+        name="Add Data"
+        component={AddDataScreen}
+        initialParams={{ farm }}
+        options={{
+          tabBarIcon: ({ focused, size }) => (
+            <FontAwesome
+              name="plus"
+              color={focused ? Colours.green700 : Colours.grey900}
+              size={size}
+            />
           ),
         }}
       />
@@ -129,10 +165,8 @@ const Root = () => {
 
   const onLayoutRootView = useCallback(async () => {
     if (!isTryingLogin) {
-      console.log('before splash screen hide async');
       await SplashScreen.hideAsync();
     }
-    console.log('after splash screen hide async');
   }, [isTryingLogin]);
 
   if (isTryingLogin) {

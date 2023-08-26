@@ -63,7 +63,6 @@ export const fullData = (options = {}) => {
     targetFeedRate: options.targetFeedRate || faker.number.float(),
     averageWaterIntake: options.averageWaterIntake,
     actualFeedRate: options.actualFeedRate,
-    floatBeforeDelivery: options.floatBeforeDelivery,
     floatAfterDelivery: options.floatAfterDelivery,
     deliveryDate: options.deliveryDate,
     comments: options.comments || faker.lorem.sentence(),
