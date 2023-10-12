@@ -40,7 +40,7 @@ describe('farmsSlice', () => {
       });
     });
 
-    it('should set loading to true and error message to an empty string when rejected', async () => {
+    it('should set loading to true and error message to the error returned when rejected', async () => {
       const action = {
         type: fetchActiveFarms.rejected.type,
         payload: 'There was an error',

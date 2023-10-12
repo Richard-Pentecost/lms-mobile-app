@@ -7,18 +7,23 @@ import { StatusBar } from 'expo-status-bar';
 import { useCallback, useEffect, useState } from 'react';
 import { View } from 'react-native';
 import Spinner from 'react-native-loading-spinner-overlay';
+import { Toggle } from 'react-native-magnus';
 import { ReduxNetworkProvider } from 'react-native-offline';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { Provider, useDispatch, useSelector } from 'react-redux';
-import store from './app/store';
+import { PersistGate } from 'redux-persist/integration/react';
+import { persistor, store } from './app/store';
 import IconButton from './components/ui/IconButton';
 import { Colours } from './constants/colours';
 import { authenticateUser, logoutUser } from './features/auth/authSlice';
+import { fetchActiveFarms } from './features/farms/farmsThunk';
+import { fetchRegions } from './features/regions/regionsThunk';
 import AddDataScreen from './screens/AddDataScreen';
 import DataScreen from './screens/DataScreen';
 import FarmScreen from './screens/FarmScreen';
 import HomeScreen from './screens/HomeScreen';
 import LoginScreen from './screens/LoginScreen';
+import { isTokenValid } from './utils/tokenManager';
 
 // SplashScreen.preventAutoHideAsync();
 
@@ -37,24 +42,39 @@ const LoginStack = () => {
   );
 };
 
-const AuthenticatedStack = () => {
+const AuthenticatedStack = ({ toggle, toggleHandler }) => {
   const dispatch = useDispatch();
 
   const logoutHandler = () => {
     dispatch(logoutUser());
   };
 
+  useEffect(() => {
+    dispatch(fetchActiveFarms());
+    dispatch(fetchRegions());
+  }, []);
+
   return (
     <Stack.Navigator
       screenOptions={{
         headerBackTileVisible: false,
         headerRight: () => (
-          <IconButton
-            icon={'sign-out'}
-            color={Colours.grey900}
-            size={24}
-            onPress={logoutHandler}
-          />
+          <>
+            <Toggle
+              on={toggle}
+              onPress={toggleHandler}
+              mr={20}
+              bg="red500"
+              h={20}
+              w={40}
+            />
+            <IconButton
+              icon={'sign-out'}
+              color={Colours.grey900}
+              size={24}
+              onPress={logoutHandler}
+            />
+          </>
         ),
       }}
     >
@@ -126,16 +146,21 @@ const FarmTabNavigation = ({ route, navigation }) => {
   );
 };
 
-const Navigation = () => {
+const Navigation = ({ toggle, toggleHandler }) => {
   const { token } = useSelector((state) => state.authState);
+
   return (
     <NavigationContainer>
-      {token ? <AuthenticatedStack /> : <LoginStack />}
+      {isTokenValid(token) ? (
+        <AuthenticatedStack toggle={toggle} toggleHandler={toggleHandler} />
+      ) : (
+        <LoginStack />
+      )}
     </NavigationContainer>
   );
 };
 
-const Root = () => {
+const Root = ({ toggle, toggleHandler }) => {
   const [isTryingLogin, setIsTryingLogin] = useState(true);
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
@@ -176,19 +201,29 @@ const Root = () => {
   return (
     <View style={{ flex: 1 }} onLayout={onLayoutRootView}>
       <Spinner visible={loading} />
-      <Navigation />
+      <Navigation toggle={toggle} toggleHandler={toggleHandler} />
     </View>
   );
 };
 
 export default function App() {
+  const [toggle, setToggle] = useState(true);
+  const toggleHandler = () => {
+    setToggle(!toggle);
+  };
   return (
     <SafeAreaProvider>
       <StatusBar style="auto" />
       <Provider store={store}>
-        <ReduxNetworkProvider>
-          <Root />
-        </ReduxNetworkProvider>
+        <PersistGate loading={null} persistor={persistor}>
+          <ReduxNetworkProvider
+            pingServerUrl={
+              toggle ? 'https://google.com' : 'https://asdgoogle.com'
+            }
+          >
+            <Root toggle={toggle} toggleHandler={toggleHandler} />
+          </ReduxNetworkProvider>
+        </PersistGate>
       </Provider>
     </SafeAreaProvider>
   );

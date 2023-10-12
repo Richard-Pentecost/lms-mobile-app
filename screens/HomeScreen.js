@@ -1,14 +1,12 @@
 import { useEffect, useState } from 'react';
 import { Div } from 'react-native-magnus';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import FarmList from '../components/Farms/FarmList';
 import FilterSortPanel from '../components/ui/FilterSortPanel';
+import InternetConnectionBanner from '../components/ui/InternetConnectionToggle';
 import SearchBar from '../components/ui/SearchBar';
-import { fetchActiveFarms } from '../features/farms/farmsThunk';
-import { fetchRegions } from '../features/regions/regionsThunk';
 
 const HomeScreen = () => {
-  const dispatch = useDispatch();
   const { farms } = useSelector((state) => state.farmsState);
   const { regions } = useSelector((state) => state.regionsState);
   const [filteredFarms, setFilteredFarms] = useState(farms);
@@ -16,17 +14,8 @@ const HomeScreen = () => {
   const [region, setRegion] = useState('');
 
   useEffect(() => {
-    if (!farms) {
-      dispatch(fetchActiveFarms());
-    }
     setFilteredFarms(farms);
-  }, [dispatch, farms]);
-
-  useEffect(() => {
-    if (!regions) {
-      dispatch(fetchRegions());
-    }
-  }, [dispatch, regions]);
+  }, [farms]);
 
   useEffect(() => {
     searchFilterFunction();
@@ -46,6 +35,7 @@ const HomeScreen = () => {
   };
   return (
     <Div px={25}>
+      <InternetConnectionBanner />
       <SearchBar searchValue={search} setSearchValue={setSearch} />
       {regions && (
         <FilterSortPanel

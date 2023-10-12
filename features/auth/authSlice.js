@@ -1,10 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit';
+// import { offlineActionTypes } from 'react-native-offline';
 import {
   getTokenPayload,
   isTokenValid,
   removeToken,
 } from '../../utils/tokenManager';
 import { loginUser } from './authThunk';
+// import { actionCreatorFn } from './authThunk';
 
 const initialState = {
   token: null,
@@ -40,6 +42,23 @@ const authSlice = createSlice({
         state.loading = false;
         state.errorMessage = action.payload;
       });
+    // .addCase(actionCreatorFn.pending, (state) => {
+    //   state.loading = true;
+    //   state.errorMessage = '';
+    // })
+    // .addCase(actionCreatorFn.fulfilled, (state, action) => {
+    //   state.token = action.payload.token;
+    //   state.loading = false;
+    //   state.loggedInUser = action.payload.user;
+    // })
+    // .addCase(actionCreatorFn.rejected, (state, action) => {
+    //   state.loading = false;
+    //   state.errorMessage = action.payload;
+    // })
+    // .addCase(offlineActionTypes.FETCH_OFFLINE_MODE, (state, action) => {
+    //   console.log('state:', state);
+    //   console.log('action:', action);
+    // });
   },
 });
 
