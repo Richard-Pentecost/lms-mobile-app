@@ -3,7 +3,7 @@ import { Div } from 'react-native-magnus';
 import { useSelector } from 'react-redux';
 import FarmList from '../components/Farms/FarmList';
 import FilterSortPanel from '../components/ui/FilterSortPanel';
-import InternetConnectionBanner from '../components/ui/InternetConnectionToggle';
+import InternetConnectionBanner from '../components/ui/InternetConnectionBanner';
 import SearchBar from '../components/ui/SearchBar';
 
 const HomeScreen = () => {

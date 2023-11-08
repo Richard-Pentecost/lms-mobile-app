@@ -2,9 +2,13 @@ import dayjs from 'dayjs';
 import { ScrollView, StyleSheet, View } from 'react-native';
 import { Button } from 'react-native-magnus';
 import { DataTable } from 'react-native-paper';
+import { useDispatch } from 'react-redux';
 import { dataTableHeadings } from '../../constants/dataTableConstants';
+import { deleteData } from '../../features/data/dataThunk';
 
-const Table = ({ data, openModal }) => {
+const Table = ({ data, farmId, openModal }) => {
+  const dispatch = useDispatch();
+
   const tableBody = data.map((rowData, index) => {
     const objectKeys = Object.keys(rowData).filter(
       (key) => key !== 'uuid' && key !== 'farmFk'
@@ -12,6 +16,8 @@ const Table = ({ data, openModal }) => {
 
     onPressHandler = () => {
       console.log('press handler');
+
+      dispatch(deleteData({ farmId, dataId: rowData.uuid }));
       //   const filteredData = data
       //     .filter((d) => d.product === rowData.product)
       //     .sort(

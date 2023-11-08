@@ -23,6 +23,7 @@ import DataScreen from './screens/DataScreen';
 import FarmScreen from './screens/FarmScreen';
 import HomeScreen from './screens/HomeScreen';
 import LoginScreen from './screens/LoginScreen';
+import RandomNameGeneratorScreen from './screens/RandomNameGeneratorScreen';
 import { isTokenValid } from './utils/tokenManager';
 
 // SplashScreen.preventAutoHideAsync();
@@ -136,6 +137,19 @@ const FarmTabNavigation = ({ route, navigation }) => {
           tabBarIcon: ({ focused, size }) => (
             <FontAwesome
               name="plus"
+              color={focused ? Colours.green700 : Colours.grey900}
+              size={size}
+            />
+          ),
+        }}
+      />
+      <BottomTab.Screen
+        name="Random Name Generator"
+        component={RandomNameGeneratorScreen}
+        options={{
+          tabBarIcon: ({ focused, size }) => (
+            <FontAwesome
+              name="random"
               color={focused ? Colours.green700 : Colours.grey900}
               size={size}
             />

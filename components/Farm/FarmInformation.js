@@ -14,7 +14,7 @@ const FarmInformation = ({ farm }) => {
   } = farm;
 
   return (
-    <Div>
+    <>
       <Div
         m="lg"
         p={10}
@@ -128,7 +128,7 @@ const FarmInformation = ({ farm }) => {
           ))}
         </>
       </Div>
-    </Div>
+    </>
   );
 };
 

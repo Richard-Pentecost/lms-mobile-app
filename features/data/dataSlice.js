@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { addData } from './dataThunk';
+import { offlineActionTypes } from 'react-native-offline';
+import { actionCreatorFn } from './dataThunk';
 
 const initialState = {
   loading: false,
@@ -21,16 +22,43 @@ const dataSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(addData.pending, (state) => {
+      // .addCase(addData.pending, (state) => {
+      //   state.loading = true;
+      //   state.errorMessage = '';
+      //   state.addDataSuccess = false;
+      // })
+      // .addCase(addData.fulfilled, (state) => {
+      //   state.loading = false;
+      //   state.addDataSuccess = true;
+      // })
+      // .addCase(addData.rejected, (state, action) => {
+      //   state.loading = false;
+      //   state.errorMessage = action.payload;
+      // });
+      .addCase(offlineActionTypes.CONNECTION_CHANGE, (state, action) => {
+        console.log('**** OFFLINE ACTION TYPES - CONNECTION_CHANGE ****');
+        console.log('state:', state);
+        console.log('action:', action);
+      })
+      .addCase(offlineActionTypes.FETCH_OFFLINE_MODE, (state, action) => {
+        console.log('**** OFFLINE ACTION TYPES - FETCH_OFFLINE_MODE ****');
+        console.log('state:', state);
+        console.log('action:', action);
+        console.log('action.payload:', action.payload);
+      })
+      .addCase(actionCreatorFn.pending, (state) => {
+        console.log('**** ACTION_CREATOR_FN - PENDING ****');
         state.loading = true;
         state.errorMessage = '';
         state.addDataSuccess = false;
       })
-      .addCase(addData.fulfilled, (state) => {
+      .addCase(actionCreatorFn.fulfilled, (state) => {
+        console.log('**** ACTION_CREATOR_FN - FULFILLED ****');
         state.loading = false;
         state.addDataSuccess = true;
       })
-      .addCase(addData.rejected, (state, action) => {
+      .addCase(actionCreatorFn.rejected, (state, action) => {
+        console.log('**** ACTION_CREATOR_FN - REJECTED ****');
         state.loading = false;
         state.errorMessage = action.payload;
       });
@@ -40,3 +68,5 @@ const dataSlice = createSlice({
 export const { clearErrors, clearSuccessFlag } = dataSlice.actions;
 
 export default dataSlice.reducer;
+
+export const getNetworkActionQueue = (state) => state.network.actionQueue;

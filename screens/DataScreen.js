@@ -3,14 +3,14 @@ import Table from '../components/Farm/Table';
 import Header from '../components/ui/Header';
 
 const DataScreen = ({ route }) => {
-  const { data } = route.params.farm;
+  const { data, uuid } = route.params.farm;
   return (
     <Div py={25}>
       <Header>Data</Header>
 
       <Div px={10} mt={25}>
         {data?.length > 0 ? (
-          <Table data={data} />
+          <Table data={data} farmId={uuid} />
         ) : (
           <Div alignItems="center" pt={50}>
             <Text fontWeight="bold" fontSize="xl">

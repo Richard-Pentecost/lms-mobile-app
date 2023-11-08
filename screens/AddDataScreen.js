@@ -3,13 +3,18 @@ import { Div } from 'react-native-magnus';
 import { useDispatch, useSelector } from 'react-redux';
 import DataForm from '../components/Farm/DataForm';
 import Header from '../components/ui/Header';
-import { clearErrors, clearSuccessFlag } from '../features/data/dataSlice';
+import {
+  clearErrors,
+  clearSuccessFlag,
+  getNetworkActionQueue,
+} from '../features/data/dataSlice';
 import { addData } from '../features/data/dataThunk';
 
 const AddDataScreen = ({ route, navigation }) => {
   const { farm } = route.params;
   const dispatch = useDispatch();
   const { addDataSuccess } = useSelector((state) => state.dataState);
+  const actionQueue = useSelector(getNetworkActionQueue);
 
   const addDataHandler = (newData) => {
     const { uuid, data } = farm;
@@ -20,6 +25,7 @@ const AddDataScreen = ({ route, navigation }) => {
       .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 
     dispatch(addData({ data: dataObj, previousData }));
+    console.log('***ACTION QUEUE***:', actionQueue);
   };
 
   useEffect(() => {
