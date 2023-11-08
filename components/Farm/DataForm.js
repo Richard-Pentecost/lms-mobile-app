@@ -7,6 +7,7 @@ import {
 } from 'react-native';
 import { Button, Div } from 'react-native-magnus';
 import { dataValidator } from '../../utils/formValidators';
+import ActionQueue from '../ui/ActionQueue';
 import DatePicker from '../ui/DatePicker';
 import InputField from '../ui/InputField';
 import Select from '../ui/Select';
@@ -144,6 +145,9 @@ const DataForm = ({ products, handleSubmit, data }) => {
           >
             {data ? 'Update data' : 'Add data'}
           </Button>
+        </Div>
+        <Div alignItems="center">
+          <ActionQueue />
         </Div>
       </KeyboardAvoidingView>
     </ScrollView>

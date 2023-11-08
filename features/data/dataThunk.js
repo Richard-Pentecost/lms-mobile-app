@@ -43,9 +43,9 @@ export const actionCreatorFn = createAsyncThunk(
   }
 );
 
-export const addData = () => {
+export const addData = (data) => {
   function createOfflineThunk() {
-    const forOffline = actionCreatorFn();
+    const forOffline = actionCreatorFn(data);
     return Object.assign(forOffline, actionCreatorFn, {
       interceptInOffline: true,
       meta: {
@@ -56,7 +56,6 @@ export const addData = () => {
       },
     });
   }
-
   return createOfflineThunk();
 };
 
