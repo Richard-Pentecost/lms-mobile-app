@@ -1,10 +1,13 @@
 import { useEffect, useState } from 'react';
-import { Div } from 'react-native-magnus';
-import { useSelector } from 'react-redux';
+import { Button, Div } from 'react-native-magnus';
+import { useDispatch, useSelector } from 'react-redux';
+import { persistor } from '../app/store';
 import FarmList from '../components/Farms/FarmList';
+import ActionQueue from '../components/ui/ActionQueue';
 import FilterSortPanel from '../components/ui/FilterSortPanel';
 import InternetConnectionBanner from '../components/ui/InternetConnectionBanner';
 import SearchBar from '../components/ui/SearchBar';
+import { fetchActiveFarms } from '../features/farms/farmsThunk';
 
 const HomeScreen = () => {
   const { farms } = useSelector((state) => state.farmsState);
@@ -12,6 +15,7 @@ const HomeScreen = () => {
   const [filteredFarms, setFilteredFarms] = useState(farms);
   const [search, setSearch] = useState('');
   const [region, setRegion] = useState('');
+  const dispatch = useDispatch();
 
   useEffect(() => {
     setFilteredFarms(farms);
@@ -20,6 +24,16 @@ const HomeScreen = () => {
   useEffect(() => {
     searchFilterFunction();
   }, [search, region]);
+
+  const getFarmsHandler = () => {
+    console.log('getFarmsHandler');
+    dispatch(fetchActiveFarms());
+  };
+
+  const clearFarmsHandler = () => {
+    console.log('clearFarmsHandler');
+    persistor.purge();
+  };
 
   const searchFilterFunction = () => {
     if (search || region) {
@@ -45,6 +59,17 @@ const HomeScreen = () => {
         />
       )}
       {farms && <FarmList farms={filteredFarms} />}
+      <Div alignItems="center">
+        <ActionQueue />
+      </Div>
+      <Div row justifyContent="center">
+        <Button onPress={getFarmsHandler} bg="green500" mx={10}>
+          Get Farms
+        </Button>
+        <Button onPress={clearFarmsHandler} bg="red500" mx={10}>
+          Remove Farms State
+        </Button>
+      </Div>
     </Div>
   );
 };

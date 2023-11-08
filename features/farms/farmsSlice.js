@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { fetchActiveFarms } from './farmsThunk';
+import { PURGE } from 'redux-persist';
+import { fetchActiveFarmsCreatorFn } from './farmsThunk';
 
 const initialState = {
   farms: null,
@@ -12,17 +13,32 @@ const farmsSlice = createSlice({
   initialState,
   extraReducers: (builder) => {
     builder
-      .addCase(fetchActiveFarms.pending, (state) => {
+      // .addCase(fetchActiveFarms.pending, (state) => {
+      //   state.loading = true;
+      //   state.errorMessage = '';
+      // })
+      // .addCase(fetchActiveFarms.fulfilled, (state, action) => {
+      //   state.farms = action.payload;
+      //   state.loading = false;
+      // })
+      // .addCase(fetchActiveFarms.rejected, (state, action) => {
+      //   state.loading = false;
+      //   state.errorMessage = action.payload;
+      // });
+      .addCase(fetchActiveFarmsCreatorFn.pending, (state) => {
         state.loading = true;
         state.errorMessage = '';
       })
-      .addCase(fetchActiveFarms.fulfilled, (state, action) => {
+      .addCase(fetchActiveFarmsCreatorFn.fulfilled, (state, action) => {
         state.farms = action.payload;
         state.loading = false;
       })
-      .addCase(fetchActiveFarms.rejected, (state, action) => {
+      .addCase(fetchActiveFarmsCreatorFn.rejected, (state, action) => {
         state.loading = false;
         state.errorMessage = action.payload;
+      })
+      .addCase(PURGE, () => {
+        return initialState;
       });
   },
 });
