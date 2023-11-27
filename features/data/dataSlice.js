@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { offlineActionTypes } from 'react-native-offline';
-import { actionCreatorFn } from './dataThunk';
+import { actionCreatorFn, updateData } from './dataThunk';
 
 const initialState = {
   loading: false,
@@ -59,6 +59,19 @@ const dataSlice = createSlice({
       })
       .addCase(actionCreatorFn.rejected, (state, action) => {
         console.log('**** ACTION_CREATOR_FN - REJECTED ****');
+        state.loading = false;
+        state.errorMessage = action.payload;
+      })
+      .addCase(updateData.pending, (state) => {
+        state.loading = true;
+        state.error = '';
+        state.addDataSuccess = false;
+      })
+      .addCase(updateData.fulfilled, (state) => {
+        state.loading = false;
+        state.addDataSuccess = true;
+      })
+      .addCase(updateData.rejected, (state, action) => {
         state.loading = false;
         state.errorMessage = action.payload;
       });

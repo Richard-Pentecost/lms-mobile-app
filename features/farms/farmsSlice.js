@@ -44,3 +44,5 @@ const farmsSlice = createSlice({
 });
 
 export default farmsSlice.reducer;
+
+export const getFarms = (state) => state.farmsState.farms;

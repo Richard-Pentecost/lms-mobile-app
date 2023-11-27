@@ -158,6 +158,6 @@ export default DataForm;
 
 const styles = StyleSheet.create({
   container: {
-    marginBottom: 10,
+    marginVertical: 10,
   },
 });

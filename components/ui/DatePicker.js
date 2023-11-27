@@ -9,7 +9,7 @@ const DatePicker = ({ date, errors, formik }) => {
 
   return (
     <>
-      <Text fontSize="md" mt="lg">
+      <Text fontSize="md" mt="sm">
         Date
       </Text>
       <Div

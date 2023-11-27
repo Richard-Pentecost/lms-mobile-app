@@ -51,6 +51,7 @@ const AuthenticatedStack = ({ toggle, toggleHandler }) => {
   };
 
   useEffect(() => {
+    console.log('***** AUTH STACK USE EFFECT *****');
     dispatch(fetchActiveFarms());
     dispatch(fetchRegions());
   }, []);
