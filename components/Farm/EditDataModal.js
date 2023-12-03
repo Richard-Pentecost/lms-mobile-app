@@ -1,10 +1,8 @@
-import { Button, Div, Icon, Modal } from 'react-native-magnus';
-
 import { useEffect } from 'react';
+import { Button, Div, Icon, Modal } from 'react-native-magnus';
 import { useDispatch, useSelector } from 'react-redux';
-import { clearErrors, clearSuccessFlag } from '../../features/data/dataSlice';
+import { clearErrors } from '../../features/data/dataSlice';
 import { updateData } from '../../features/data/dataThunk';
-import { fetchActiveFarms } from '../../features/farms/farmsThunk';
 import Header from '../ui/Header';
 import DataForm from './DataForm';
 
@@ -27,18 +25,15 @@ const EditDataModal = ({
   };
 
   useEffect(() => {
-    // console.log('EDIT DATA MODAL USE EFFECT');
-    dispatch(fetchActiveFarms());
-    closeModal();
+    addDataSuccess && closeModal();
 
     return () => {
-      dispatch(clearSuccessFlag());
       dispatch(clearErrors());
     };
   }, [dispatch, addDataSuccess]);
 
   return (
-    <Modal isVisible={showModal}>
+    <Modal isVisible={showModal} useNativeDriver={true}>
       <Div py={25}>
         <Button
           bg="gray400"

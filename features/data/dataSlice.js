@@ -17,6 +17,7 @@ const dataSlice = createSlice({
       state.errorMessage = '';
     },
     clearSuccessFlag: (state) => {
+      // console.log('***** CLEAR SUCCESS FLAG *****');
       state.addDataSuccess = false;
     },
   },
@@ -47,18 +48,18 @@ const dataSlice = createSlice({
         console.log('action.payload:', action.payload);
       })
       .addCase(actionCreatorFn.pending, (state) => {
-        console.log('**** ACTION_CREATOR_FN - PENDING ****');
+        // console.log('**** ACTION_CREATOR_FN - PENDING ****');
         state.loading = true;
         state.errorMessage = '';
         state.addDataSuccess = false;
       })
       .addCase(actionCreatorFn.fulfilled, (state) => {
-        console.log('**** ACTION_CREATOR_FN - FULFILLED ****');
+        // console.log('**** ACTION_CREATOR_FN - FULFILLED ****');
         state.loading = false;
         state.addDataSuccess = true;
       })
       .addCase(actionCreatorFn.rejected, (state, action) => {
-        console.log('**** ACTION_CREATOR_FN - REJECTED ****');
+        // console.log('**** ACTION_CREATOR_FN - REJECTED ****');
         state.loading = false;
         state.errorMessage = action.payload;
       })

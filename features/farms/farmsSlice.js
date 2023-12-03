@@ -6,11 +6,22 @@ const initialState = {
   farms: null,
   loading: false,
   errorMessage: '',
+  selectedFarm: null,
 };
 
 const farmsSlice = createSlice({
   name: 'farms',
   initialState,
+  reducers: {
+    selectedFarm: (state, action) => {
+      // console.log('**** SELECTED FARM ****');
+      const farm = state.farms.find((farm) => farm.uuid === action.payload);
+      state.selectedFarm = farm;
+    },
+    clearSelectedFarm: (state) => {
+      state.selectedFarm = null;
+    },
+  },
   extraReducers: (builder) => {
     builder
       // .addCase(fetchActiveFarms.pending, (state) => {
@@ -43,6 +54,8 @@ const farmsSlice = createSlice({
   },
 });
 
+export const { selectedFarm, clearSelectedFarm } = farmsSlice.actions;
+
 export default farmsSlice.reducer;
 
-export const getFarms = (state) => state.farmsState.farms;
+export const getFarmsState = (state) => state.farmsState;

@@ -1,14 +1,21 @@
 import { useNavigation } from '@react-navigation/native';
 import { FlatList } from 'react-native';
 import { Div } from 'react-native-magnus';
+import { useDispatch } from 'react-redux';
+import { selectedFarm } from '../../features/farms/farmsSlice';
 import FarmCard from './FarmCard';
 
 const FarmList = ({ farms }) => {
+  const dispatch = useDispatch();
   const navigation = useNavigation();
 
   const renderFarmCard = ({ item }) => {
     onPressHandler = () => {
-      navigation.navigate('Farm', { farm: item });
+      dispatch(selectedFarm(item.uuid));
+      navigation.navigate('Farm', {
+        farmId: item.uuid,
+        farmName: item.farmName,
+      });
     };
 
     const { farmName, postcode, contactName, contactNumber } = item;

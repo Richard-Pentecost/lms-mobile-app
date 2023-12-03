@@ -51,7 +51,6 @@ const AuthenticatedStack = ({ toggle, toggleHandler }) => {
   };
 
   useEffect(() => {
-    console.log('***** AUTH STACK USE EFFECT *****');
     dispatch(fetchActiveFarms());
     dispatch(fetchRegions());
   }, []);
@@ -59,7 +58,6 @@ const AuthenticatedStack = ({ toggle, toggleHandler }) => {
   return (
     <Stack.Navigator
       screenOptions={{
-        headerBackTileVisible: false,
         headerRight: () => (
           <>
             <Toggle
@@ -87,11 +85,11 @@ const AuthenticatedStack = ({ toggle, toggleHandler }) => {
 };
 
 const FarmTabNavigation = ({ route, navigation }) => {
-  const { farm } = route.params;
+  const { farmId, farmName } = route.params;
 
   useEffect(() => {
-    navigation.setOptions({ title: farm.farmName });
-  }, [farm]);
+    navigation.setOptions({ title: farmName });
+  }, [farmName]);
 
   return (
     <BottomTab.Navigator
@@ -105,7 +103,7 @@ const FarmTabNavigation = ({ route, navigation }) => {
       <BottomTab.Screen
         name="Information"
         component={FarmScreen}
-        initialParams={{ farm }}
+        initialParams={{ farmId }}
         options={{
           tabBarIcon: ({ focused, size }) => (
             <FontAwesome
@@ -119,7 +117,7 @@ const FarmTabNavigation = ({ route, navigation }) => {
       <BottomTab.Screen
         name="Data"
         component={DataScreen}
-        initialParams={{ farm }}
+        initialParams={{ farmId }}
         options={{
           tabBarIcon: ({ focused, size }) => (
             <FontAwesome
@@ -133,7 +131,7 @@ const FarmTabNavigation = ({ route, navigation }) => {
       <BottomTab.Screen
         name="Add Data"
         component={AddDataScreen}
-        initialParams={{ farm }}
+        initialParams={{ farmId }}
         options={{
           tabBarIcon: ({ focused, size }) => (
             <FontAwesome
@@ -187,10 +185,16 @@ const Root = ({ toggle, toggleHandler }) => {
   );
 
   useEffect(() => {
+    console.log('*** ROOT - APP.JS ***');
+    console.log('farmLoading:', farmsLoading);
+    console.log('loading:', loading);
     if (farmsLoading || authLoading || regionsLoading) {
+      console.log('**** setting loading state ****');
       setLoading(true);
     } else {
-      setLoading(false);
+      setTimeout(() => {
+        setLoading(false);
+      }, 1000);
     }
   }, [farmsLoading, authLoading, regionsLoading]);
 

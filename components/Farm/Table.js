@@ -32,7 +32,7 @@ const Table = ({ data, farmId, openModal }) => {
       openModal(rowData, previousData);
     };
 
-    // onDeleteHandler = () => {
+    // onPressHandler = () => {
     //   dispatch(deleteData({ farmId, dataId: rowData.uuid }));
     // };
 
