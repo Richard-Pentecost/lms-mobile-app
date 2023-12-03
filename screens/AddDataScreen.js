@@ -3,13 +3,14 @@ import { Div } from 'react-native-magnus';
 import { useDispatch, useSelector } from 'react-redux';
 import DataForm from '../components/Farm/DataForm';
 import Header from '../components/ui/Header';
-import { clearErrors, clearSuccessFlag } from '../features/data/dataSlice';
+import { clearErrors } from '../features/data/dataSlice';
 import { addData } from '../features/data/dataThunk';
+import { getFarmsState } from '../features/farms/farmsSlice';
 
-const AddDataScreen = ({ route, navigation }) => {
-  const { farm } = route.params;
+const AddDataScreen = ({ navigation }) => {
   const dispatch = useDispatch();
   const { addDataSuccess } = useSelector((state) => state.dataState);
+  const { selectedFarm: farm } = useSelector(getFarmsState);
 
   const addDataHandler = (newData) => {
     const { uuid, data } = farm;
@@ -26,7 +27,6 @@ const AddDataScreen = ({ route, navigation }) => {
     addDataSuccess && navigation.navigate('Data');
 
     return () => {
-      dispatch(clearSuccessFlag());
       dispatch(clearErrors());
     };
   }, [dispatch, addDataSuccess, navigation]);

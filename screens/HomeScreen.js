@@ -1,4 +1,5 @@
-import { useEffect, useState } from 'react';
+import { useFocusEffect } from '@react-navigation/native';
+import { useCallback, useEffect, useState } from 'react';
 import { Button, Div } from 'react-native-magnus';
 import { useDispatch, useSelector } from 'react-redux';
 import { persistor } from '../app/store';
@@ -7,6 +8,7 @@ import ActionQueue from '../components/ui/ActionQueue';
 import FilterSortPanel from '../components/ui/FilterSortPanel';
 import InternetConnectionBanner from '../components/ui/InternetConnectionBanner';
 import SearchBar from '../components/ui/SearchBar';
+import { clearSelectedFarm } from '../features/farms/farmsSlice';
 import { fetchActiveFarms } from '../features/farms/farmsThunk';
 
 const HomeScreen = () => {
@@ -25,6 +27,11 @@ const HomeScreen = () => {
     searchFilterFunction();
   }, [search, region]);
 
+  useFocusEffect(
+    useCallback(() => {
+      dispatch(clearSelectedFarm());
+    }, [dispatch, clearSelectedFarm])
+  );
   const getFarmsHandler = () => {
     console.log('getFarmsHandler');
     dispatch(fetchActiveFarms());
@@ -47,6 +54,7 @@ const HomeScreen = () => {
       setFilteredFarms(farms);
     }
   };
+
   return (
     <Div px={25}>
       <InternetConnectionBanner />

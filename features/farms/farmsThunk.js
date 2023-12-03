@@ -38,6 +38,7 @@ export const fetchActiveFarmsCreatorFn = createAsyncThunk(
 );
 
 export const fetchActiveFarms = () => {
+  // console.log('******* FETCH ACTIVE FARMS **********');
   function createOfflineThunk() {
     const forOffline = fetchActiveFarmsCreatorFn();
     return Object.assign(forOffline, fetchActiveFarmsCreatorFn, {

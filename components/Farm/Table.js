@@ -4,7 +4,6 @@ import { Button } from 'react-native-magnus';
 import { DataTable } from 'react-native-paper';
 import { useDispatch } from 'react-redux';
 import { dataTableHeadings } from '../../constants/dataTableConstants';
-import { deleteData } from '../../features/data/dataThunk';
 
 const Table = ({ data, farmId, openModal }) => {
   const dispatch = useDispatch();
@@ -15,26 +14,27 @@ const Table = ({ data, farmId, openModal }) => {
     );
 
     onPressHandler = () => {
-      console.log('press handler');
+      const filteredData = data
+        .filter((d) => d.product === rowData.product)
+        .sort(
+          (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()
+        );
 
-      dispatch(deleteData({ farmId, dataId: rowData.uuid }));
-      //   const filteredData = data
-      //     .filter((d) => d.product === rowData.product)
-      //     .sort(
-      //       (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()
-      //     );
+      let previousData;
 
-      //   let previousData;
+      if (filteredData.length > 1) {
+        const index = filteredData.findIndex(
+          (data) => data.uuid === rowData.uuid
+        );
+        previousData = index > 0 && filteredData[index - 1];
+      }
 
-      //   if (filteredData.length > 1) {
-      //     const index = filteredData.findIndex(
-      //       (data) => data.uuid === rowData.uuid
-      //     );
-      //     previousData = index > 0 && filteredData[index - 1];
-      //   }
-
-      //   openModal(rowData, previousData);
+      openModal(rowData, previousData);
     };
+
+    // onPressHandler = () => {
+    //   dispatch(deleteData({ farmId, dataId: rowData.uuid }));
+    // };
 
     return (
       <DataTable.Row key={index} testID={`Row-${index}`}>
@@ -101,5 +101,8 @@ const styles = StyleSheet.create({
   commentCell: {
     width: 200,
     justifyContent: 'center',
+  },
+  deleteIcon: {
+    alignItems: 'center',
   },
 });

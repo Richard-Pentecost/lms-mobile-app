@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { offlineActionTypes } from 'react-native-offline';
-import { actionCreatorFn } from './dataThunk';
+import { addDataCreatorFn, updateData } from './dataThunk';
 
 const initialState = {
   loading: false,
@@ -17,6 +17,7 @@ const dataSlice = createSlice({
       state.errorMessage = '';
     },
     clearSuccessFlag: (state) => {
+      // console.log('***** CLEAR SUCCESS FLAG *****');
       state.addDataSuccess = false;
     },
   },
@@ -46,19 +47,32 @@ const dataSlice = createSlice({
         console.log('action:', action);
         console.log('action.payload:', action.payload);
       })
-      .addCase(actionCreatorFn.pending, (state) => {
-        console.log('**** ACTION_CREATOR_FN - PENDING ****');
+      .addCase(addDataCreatorFn.pending, (state) => {
+        // console.log('**** ACTION_CREATOR_FN - PENDING ****');
         state.loading = true;
         state.errorMessage = '';
         state.addDataSuccess = false;
       })
-      .addCase(actionCreatorFn.fulfilled, (state) => {
-        console.log('**** ACTION_CREATOR_FN - FULFILLED ****');
+      .addCase(addDataCreatorFn.fulfilled, (state) => {
+        // console.log('**** ACTION_CREATOR_FN - FULFILLED ****');
         state.loading = false;
         state.addDataSuccess = true;
       })
-      .addCase(actionCreatorFn.rejected, (state, action) => {
-        console.log('**** ACTION_CREATOR_FN - REJECTED ****');
+      .addCase(addDataCreatorFn.rejected, (state, action) => {
+        // console.log('**** ACTION_CREATOR_FN - REJECTED ****');
+        state.loading = false;
+        state.errorMessage = action.payload;
+      })
+      .addCase(updateData.pending, (state) => {
+        state.loading = true;
+        state.errorMessage = '';
+        state.addDataSuccess = false;
+      })
+      .addCase(updateData.fulfilled, (state) => {
+        state.loading = false;
+        state.addDataSuccess = true;
+      })
+      .addCase(updateData.rejected, (state, action) => {
         state.loading = false;
         state.errorMessage = action.payload;
       });

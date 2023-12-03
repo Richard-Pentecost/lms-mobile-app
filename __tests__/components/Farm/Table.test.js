@@ -1,11 +1,12 @@
-import { render, screen } from '@testing-library/react-native';
+import { screen } from '@testing-library/react-native';
 import Table from '../../../components/Farm/Table';
 import { fullData } from '../../../test-utils/data-factory';
+import { renderWithProviders } from '../../../test-utils/test-redux-store';
 
 describe('Table', () => {
   const farmData = [fullData(), fullData(), fullData()];
   beforeEach(() => {
-    render(<Table data={farmData} />);
+    renderWithProviders(<Table data={farmData} />);
   });
 
   it('should render the table with column headings', () => {

@@ -23,8 +23,8 @@ import { getToken } from '../../utils/tokenManager';
 //   }
 // );
 
-export const actionCreatorFn = createAsyncThunk(
-  'data/addData',
+export const addDataCreatorFn = createAsyncThunk(
+  'data/ADD_DATA',
   async ({ data, previousData }, { rejectWithValue }) => {
     try {
       const previousDataUuid = previousData.length > 0 && previousData[0].uuid;
@@ -45,11 +45,11 @@ export const actionCreatorFn = createAsyncThunk(
 
 export const addData = (data) => {
   function createOfflineThunk() {
-    const forOffline = actionCreatorFn(data);
-    return Object.assign(forOffline, actionCreatorFn, {
+    const forOffline = addDataCreatorFn(data);
+    return Object.assign(forOffline, addDataCreatorFn, {
       interceptInOffline: true,
       meta: {
-        ...(actionCreatorFn.meta || {}),
+        ...(addDataCreatorFn.meta || {}),
         name: 'addData' + Math.random(),
         retry: true,
         args: [],
@@ -59,8 +59,29 @@ export const addData = (data) => {
   return createOfflineThunk();
 };
 
+export const updateData = createAsyncThunk(
+  'data/UPDATE_DATA',
+  async ({ data, dataId, previousData }, { rejectWithValue }) => {
+    const previousDataUuid = previousData?.uuid;
+
+    try {
+      const { farmFk: farmId } = data;
+      const headers = { Authorization: await getToken() };
+      await axios.patch(
+        `${API_URL}/farms/${farmId}/data/${dataId}`,
+        { data, previousDataUuid },
+        { headers }
+      );
+      return;
+    } catch (err) {
+      console.error('ERROR:', err);
+      return rejectWithValue('There was an error updating data');
+    }
+  }
+);
+
 export const deleteData = createAsyncThunk(
-  'data/deleteData',
+  'data/DELETE_DATA',
   async ({ farmId, dataId }, { rejectWithValue }) => {
     try {
       const headers = { Authorization: await getToken() };
