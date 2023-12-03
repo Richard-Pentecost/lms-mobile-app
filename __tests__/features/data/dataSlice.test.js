@@ -2,7 +2,7 @@ import dataReducer, {
   clearErrors,
   clearSuccessFlag,
 } from '../../../features/data/dataSlice';
-import { addData } from '../../../features/data/dataThunk';
+import { addDataCreatorFn, updateData } from '../../../features/data/dataThunk';
 
 describe('dataSlice', () => {
   const initialState = {
@@ -34,9 +34,9 @@ describe('dataSlice', () => {
     });
   });
 
-  describe('addData', () => {
+  describe('addDataCreatorFn', () => {
     it('should set loading to true, the error message to an empty string and the addDataSuccess flag to false when pending', () => {
-      const action = { type: addData.pending.type };
+      const action = { type: addDataCreatorFn.pending.type };
       const state = {
         ...initialState,
         errorMessage: 'Some error',
@@ -50,7 +50,7 @@ describe('dataSlice', () => {
     });
 
     it('should set loading to false and the addDataSuccess flag to true when fulfilled', () => {
-      const action = { type: addData.fulfilled.type };
+      const action = { type: addDataCreatorFn.fulfilled.type };
       const state = {
         ...initialState,
         loading: true,
@@ -65,7 +65,54 @@ describe('dataSlice', () => {
 
     it('should set loading to false and the error message to the error returned when rejected', () => {
       const action = {
-        type: addData.rejected.type,
+        type: addDataCreatorFn.rejected.type,
+        payload: 'There was an error',
+      };
+      const state = {
+        ...initialState,
+        errorMessage: '',
+        loading: true,
+      };
+      const afterReducerOperation = dataReducer(state, action);
+      expect(afterReducerOperation).toEqual({
+        ...initialState,
+        errorMessage: 'There was an error',
+      });
+    });
+  });
+
+  describe('updateData', () => {
+    it('should set loading to true, the error message to an empty string and the addDataSuccess flag to false when pending', () => {
+      const action = { type: updateData.pending.type };
+      const state = {
+        ...initialState,
+        errorMessage: 'Some error',
+        addDataSuccess: true,
+      };
+      const afterReducerOperation = dataReducer(state, action);
+      expect(afterReducerOperation).toEqual({
+        ...initialState,
+        loading: true,
+      });
+    });
+
+    it('should set loading to false and the addDataSuccess flag to true when fulfilled', () => {
+      const action = { type: updateData.fulfilled.type };
+      const state = {
+        ...initialState,
+        loading: true,
+        addDataSuccess: false,
+      };
+      const afterReducerOperation = dataReducer(state, action);
+      expect(afterReducerOperation).toEqual({
+        ...initialState,
+        addDataSuccess: true,
+      });
+    });
+
+    it('should set loading to false and the error message to the error returned when rejected', () => {
+      const action = {
+        type: updateData.rejected.type,
         payload: 'There was an error',
       };
       const state = {

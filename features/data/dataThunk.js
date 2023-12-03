@@ -23,7 +23,7 @@ import { getToken } from '../../utils/tokenManager';
 //   }
 // );
 
-export const actionCreatorFn = createAsyncThunk(
+export const addDataCreatorFn = createAsyncThunk(
   'data/ADD_DATA',
   async ({ data, previousData }, { rejectWithValue }) => {
     try {
@@ -45,11 +45,11 @@ export const actionCreatorFn = createAsyncThunk(
 
 export const addData = (data) => {
   function createOfflineThunk() {
-    const forOffline = actionCreatorFn(data);
-    return Object.assign(forOffline, actionCreatorFn, {
+    const forOffline = addDataCreatorFn(data);
+    return Object.assign(forOffline, addDataCreatorFn, {
       interceptInOffline: true,
       meta: {
-        ...(actionCreatorFn.meta || {}),
+        ...(addDataCreatorFn.meta || {}),
         name: 'addData' + Math.random(),
         retry: true,
         args: [],
