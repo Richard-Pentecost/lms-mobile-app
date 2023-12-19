@@ -2,11 +2,12 @@ import { FontAwesome } from '@expo/vector-icons';
 import { StyleSheet } from 'react-native';
 import { Div, Text } from 'react-native-magnus';
 import SelectDropdown from 'react-native-select-dropdown';
+import { Colours } from '../../constants/colours';
 
 const Select = ({ label, field, products, errors, touched, formik }) => {
   const dropdownBoxStyling = () => {
     return errors && touched
-      ? { ...styles.dropdownBoxBtnStyle, borderColor: '#f56565' }
+      ? { ...styles.dropdownBoxBtnStyle, borderColor: Colours.red500 }
       : styles.dropdownBoxBtnStyle;
   };
 
@@ -30,7 +31,7 @@ const Select = ({ label, field, products, errors, touched, formik }) => {
             return (
               <FontAwesome
                 name={isOpened ? 'chevron-up' : 'chevron-down'}
-                color={'#cbd5e0'}
+                color={Colours.grey400}
                 size={14}
               />
             );
@@ -43,7 +44,7 @@ const Select = ({ label, field, products, errors, touched, formik }) => {
       </Div>
       {touched && errors && (
         <Div testID="error-container">
-          <Text color="red500" fontSize="md" mt="sm">
+          <Text color={Colours.red500} fontSize="md" mt="sm">
             {errors}
           </Text>
         </Div>
@@ -58,29 +59,32 @@ const styles = StyleSheet.create({
   dropdownBoxBtnStyle: {
     width: '100%',
     height: 40,
-    backgroundColor: '#FFF',
+    backgroundColor: Colours.white100,
     borderRadius: 6,
     borderWidth: 1,
-    borderColor: '#cbd5e0',
+    borderColor: Colours.grey400,
     marginTop: 6,
   },
   dropdownBoxBtnTxtStyle: {
     marginLeft: 5,
-    color: '#1a202c',
+    color: Colours.grey900,
     textAlign: 'left',
     fontSize: 11,
   },
-  dropdownBoxDropdownStyle: { backgroundColor: '#EFEFEF', borderRadius: 6 },
+  dropdownBoxDropdownStyle: {
+    backgroundColor: Colours.white200,
+    borderRadius: 6,
+  },
   dropdownBoxRowStyle: {
-    backgroundColor: '#EFEFEF',
-    borderBottomColor: '#cbd5e0',
+    backgroundColor: Colours.white200,
+    borderBottomColor: Colours.grey400,
   },
   dropdownBoxRowTxtStyle: {
     fontSize: 11,
-    color: '#1a202c',
+    color: Colours.grey900,
     textAlign: 'left',
   },
   dropdownInvalid: {
-    borderColor: '#f56565',
+    borderColor: Colours.red500,
   },
 });

@@ -6,6 +6,7 @@ import {
   StyleSheet,
 } from 'react-native';
 import { Button, Div } from 'react-native-magnus';
+import { Colours } from '../../constants/colours';
 import { dataValidator } from '../../utils/formValidators';
 import ActionQueue from '../ui/ActionQueue';
 import DatePicker from '../ui/DatePicker';
@@ -140,7 +141,7 @@ const DataForm = ({ products, handleSubmit, data }) => {
             block
             py="lg"
             my="xl"
-            bg="green700"
+            bg={Colours.green700}
             onPress={formik.handleSubmit}
           >
             {data ? 'Update data' : 'Add data'}

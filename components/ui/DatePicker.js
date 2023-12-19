@@ -1,6 +1,7 @@
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { StyleSheet } from 'react-native';
 import { Div, Text } from 'react-native-magnus';
+import { Colours } from '../../constants/colours';
 
 const DatePicker = ({ date, errors, formik }) => {
   const handleChange = (_, selectedDate) => {
@@ -14,8 +15,8 @@ const DatePicker = ({ date, errors, formik }) => {
       </Text>
       <Div
         mt="sm"
-        bg="#fff"
-        borderColor={errors ? 'red500' : 'gray400'}
+        bg={Colours.white100}
+        borderColor={errors ? Colours.red500 : Colours.grey400}
         borderWidth={1}
         rounded="md"
         testID="datePicker-container"
@@ -33,7 +34,7 @@ const DatePicker = ({ date, errors, formik }) => {
       </Div>
       {errors && (
         <Div testID="error-container">
-          <Text color="red500" fontSize="md" mt="sm">
+          <Text color={Colours.red500} fontSize="md" mt="sm">
             {errors}
           </Text>
         </Div>

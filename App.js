@@ -64,7 +64,7 @@ const AuthenticatedStack = ({ toggle, toggleHandler }) => {
               on={toggle}
               onPress={toggleHandler}
               mr={20}
-              bg="red500"
+              bg={Colours.red500}
               h={20}
               w={40}
             />
@@ -185,11 +185,7 @@ const Root = ({ toggle, toggleHandler }) => {
   );
 
   useEffect(() => {
-    console.log('*** ROOT - APP.JS ***');
-    console.log('farmLoading:', farmsLoading);
-    console.log('loading:', loading);
     if (farmsLoading || authLoading || regionsLoading) {
-      console.log('**** setting loading state ****');
       setLoading(true);
     } else {
       setTimeout(() => {

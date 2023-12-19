@@ -1,4 +1,5 @@
 import { Div, Input, Text } from 'react-native-magnus';
+import { Colours } from '../../constants/colours';
 
 const InputField = ({
   label,
@@ -24,15 +25,15 @@ const InputField = ({
       value={value}
       onChangeText={formik.handleChange(field)}
       onBlur={formik.handleBlur(field)}
-      borderColor={touched && errors ? 'red500' : 'gray400'}
-      focusBorderColor="blue400"
+      borderColor={touched && errors ? Colours.red500 : Colours.grey400}
+      focusBorderColor={Colours.blue400}
       multiline={!!noOfLines}
       numberOfLines={noOfLines}
       textAlignVertical={'top'}
     />
     {touched && errors && (
       <Div testID="error-container">
-        <Text color="red500" fontSize="md" mt="sm">
+        <Text color={Colours.red500} fontSize="md" mt="sm">
           {errors}
         </Text>
       </Div>

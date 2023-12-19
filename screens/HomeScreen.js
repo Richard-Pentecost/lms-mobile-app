@@ -71,10 +71,10 @@ const HomeScreen = () => {
         <ActionQueue />
       </Div>
       <Div row justifyContent="center">
-        <Button onPress={getFarmsHandler} bg="green500" mx={10}>
+        <Button onPress={getFarmsHandler} bg={Colours.green500} mx={10}>
           Get Farms
         </Button>
-        <Button onPress={clearFarmsHandler} bg="red500" mx={10}>
+        <Button onPress={clearFarmsHandler} bg={Colours.red500} mx={10}>
           Remove Farms State
         </Button>
       </Div>
