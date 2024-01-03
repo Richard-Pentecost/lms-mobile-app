@@ -8,6 +8,7 @@ import ActionQueue from '../components/ui/ActionQueue';
 import FilterSortPanel from '../components/ui/FilterSortPanel';
 import InternetConnectionBanner from '../components/ui/InternetConnectionBanner';
 import SearchBar from '../components/ui/SearchBar';
+import { Colours } from '../constants/colours';
 import { clearSelectedFarm } from '../features/farms/farmsSlice';
 import { fetchActiveFarms } from '../features/farms/farmsThunk';
 

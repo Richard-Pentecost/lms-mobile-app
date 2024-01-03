@@ -62,12 +62,15 @@ const networkTransform = createTransform(
 );
 
 const comparisonFn = (action, actionQueue) => {
-  console.log('***** COMPARISON FN *****');
-  console.log('action:', action);
-  console.log('actionQueue:', actionQueue);
   if (typeof action === 'function') {
-    console.log('meta.name:', action.meta.name);
+    return actionQueue.find((queued) => {
+      return (
+        action.meta.name === queued.meta.name &&
+        action.meta.args.id === queued.meta.args.id
+      );
+    });
   }
+  return undefined;
 };
 
 const combinedReducer = combineReducers({

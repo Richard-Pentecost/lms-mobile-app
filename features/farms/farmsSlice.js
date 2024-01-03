@@ -14,7 +14,6 @@ const farmsSlice = createSlice({
   initialState,
   reducers: {
     selectedFarm: (state, action) => {
-      // console.log('**** SELECTED FARM ****');
       const farm = state.farms.find((farm) => farm.uuid === action.payload);
       state.selectedFarm = farm;
     },
@@ -24,18 +23,6 @@ const farmsSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      // .addCase(fetchActiveFarms.pending, (state) => {
-      //   state.loading = true;
-      //   state.errorMessage = '';
-      // })
-      // .addCase(fetchActiveFarms.fulfilled, (state, action) => {
-      //   state.farms = action.payload;
-      //   state.loading = false;
-      // })
-      // .addCase(fetchActiveFarms.rejected, (state, action) => {
-      //   state.loading = false;
-      //   state.errorMessage = action.payload;
-      // });
       .addCase(fetchActiveFarmsCreatorFn.pending, (state) => {
         state.loading = true;
         state.errorMessage = '';

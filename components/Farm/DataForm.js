@@ -28,8 +28,9 @@ const DataForm = ({ products, handleSubmit, data }) => {
       floatAfterDelivery: data ? data.floatAfterDelivery : '',
       comments: data ? data.comments : '',
     },
-    onSubmit: (data) => {
-      handleSubmit(data);
+    onSubmit: async (data, { resetForm }) => {
+      await handleSubmit(data);
+      resetForm({ values: '' });
     },
     validationSchema: dataValidator,
   });
